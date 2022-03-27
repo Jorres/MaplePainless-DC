@@ -1,0 +1,3 @@
+build
+*.o
+.ccls-cache

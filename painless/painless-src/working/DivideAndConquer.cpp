@@ -27,6 +27,9 @@
 #include "../working/SimpleWorkingQueue.h"
 
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include <algorithm>
 #include <string>
 #include <unistd.h>
@@ -251,6 +254,23 @@ DivideAndConquer::DivideAndConquer()
    nCancelledDivisions = 0;
 
    workQueue = new SimpleWorkingQueue();
+
+   const char* filename = Parameters::getFilename();
+   std::string s(filename);
+   std::string cube_filename = s.substr(0, s.find('.')) + std::string(".txt");
+   std::string input;
+
+   std::ifstream cubes_file(cube_filename.c_str());
+
+   while (std::getline(cubes_file, input)) {
+       std::stringstream iss(input);
+       int x;
+       vector<int> cube;
+       while (iss >> x) {
+           cube.push_back(x);
+       }
+       workQueue->pushJob(cube);
+   }
 
    waitJob = true;
 
