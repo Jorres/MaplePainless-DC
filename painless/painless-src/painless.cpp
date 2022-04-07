@@ -90,7 +90,7 @@ int main(int argc, char ** argv)
              "the solver and delete old solver, default is 1\n");
       printf("\t-num-split=<INT>\t for D&C: number of splitting variables picked at" \
              "each splitting point, default is 1\n");
-
+      printf("\t-use-decomp=<INT>\t for D&C: 0=do not use, 1=use\n");
       return 0;
    }
 
