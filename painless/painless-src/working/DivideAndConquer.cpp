@@ -255,15 +255,16 @@ DivideAndConquer::DivideAndConquer()
 
    workQueue = new SimpleWorkingQueue();
 
-   if (Parameters::getIntParam("use-decomp", 0) == 1) {
+   const string cubesFilepath = Parameters::getParam("initial-cubes");
+
+   log(0, "cubes Filepath: %s \n", cubesFilepath.c_str());
+
+   if (cubesFilepath.size() > 0) {
        log(0, "Using decomposition\n");
-       const char* filename = Parameters::getFilename();
-       std::string s(filename);
-       std::string cube_filename = s.substr(0, s.find('.')) + std::string(".txt");
-       log(0, cube_filename.c_str());
+       log(0, cubesFilepath.c_str());
        std::string input;
 
-       std::ifstream cubes_file(cube_filename.c_str());
+       std::ifstream cubes_file(cubesFilepath.c_str());
 
        while (std::getline(cubes_file, input)) {
            std::stringstream iss(input);
