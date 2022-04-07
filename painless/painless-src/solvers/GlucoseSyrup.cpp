@@ -187,12 +187,13 @@ GlucoseSyrup::loadFormula(const char * filename)
    int firstNumber = std::stoi(sizeOnly.substr(0, sizeOnly.find('_')));
    int secondNumber = std::stoi(sizeOnly.substr(sizeOnly.find('_') + 1));
 
-   log(0, "Parsed this many input variables: ");
-   log(0, std::to_string(firstNumber * secondNumber).c_str());
-   log(0, "\n\n");
+   // log(0, "Parsed this many input variables: ");
+   // log(0, std::to_string(firstNumber * secondNumber).c_str());
+   // log(0, "\n\n");
 
    parse_DIMACS(in, *solver);
    solver->inputVars = firstNumber * secondNumber;
+   solver->shouldUseInputVarsOnly = Parameters::getIntParam("use-input-vars-only", 0);
 
    gzclose(in);
 

@@ -675,11 +675,17 @@ Lit Solver::pickBranchLitUsingFlipActivity(){
   int val=-1;
 
   for(size_t i=0;i<flipActivity.size();i++){
-    if(flipActivity[i]>val && decision[i] && value(i) == l_Undef && i < this->inputVars){
-    // if(flipActivity[i]>val && decision[i] && value(i) == l_Undef){
-      val=flipActivity[i];
-      next=i;
-    }
+      if (this->shouldUseInputVarsOnly) {
+            if(flipActivity[i]>val && decision[i] && value(i) == l_Undef && i < this->inputVars){
+              val=flipActivity[i];
+              next=i;
+            }
+        } else {
+            if(flipActivity[i]>val && decision[i] && value(i) == l_Undef){
+              val=flipActivity[i];
+              next=i;
+            }
+        }
   }
 
   return val == -1 ? lit_Undef : mkLit(next, rnd_pol ? drand(random_seed) < 0.5 : polarity[next]);

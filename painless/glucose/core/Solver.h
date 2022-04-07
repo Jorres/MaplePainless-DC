@@ -184,6 +184,7 @@ public:
                                   // this vector represent the final conflict clause expressed in the assumptions.
                                   
     int inputVars;
+    bool shouldUseInputVarsOnly;
 
     // Mode of operation:
     //

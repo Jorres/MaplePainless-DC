@@ -91,6 +91,7 @@ int main(int argc, char ** argv)
       printf("\t-num-split=<INT>\t for D&C: number of splitting variables picked at" \
              "each splitting point, default is 1\n");
       printf("\t-use-decomp=<INT>\t for D&C: 0=do not use, 1=use\n");
+      printf("\t-use-input-vars-only=<INT>\t for D&C: 0=use all variables, 1=limit splitting to input vars\n");
       return 0;
    }
 
