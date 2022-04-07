@@ -675,7 +675,8 @@ Lit Solver::pickBranchLitUsingFlipActivity(){
   int val=-1;
 
   for(size_t i=0;i<flipActivity.size();i++){
-    if(flipActivity[i]>val && decision[i] && value(i) == l_Undef){
+    if(flipActivity[i]>val && decision[i] && value(i) == l_Undef && i < this->inputVars){
+    // if(flipActivity[i]>val && decision[i] && value(i) == l_Undef){
       val=flipActivity[i];
       next=i;
     }
@@ -696,8 +697,8 @@ void Solver::pickBranchLitUsingFlipActivity(int n, std::vector<Lit>& lits){
     val=-1;
     for(size_t i=0;i<copy.size();i++){
       if(copy[i]>val && decision[i] && value(i) == l_Undef){
-	val=copy[i];
-	next=i;
+        val=copy[i];
+        next=i;
       }
     }
     if(val==-1) break;

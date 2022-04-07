@@ -23,6 +23,7 @@
 #include "parallel/ParallelSolver.h"
 
 #include "../utils/Parameters.h"
+#include "../utils/Logger.h"
 #include "../clauses/ClauseManager.h"
 #include "../solvers/GlucoseSyrup.h"
 
@@ -178,7 +179,20 @@ GlucoseSyrup::loadFormula(const char * filename)
 {
    gzFile in = gzopen(filename, "rb");
 
+   // Parsing: blah/blah/blah/anything/BvP_6_4.cnf
+   std::string sFilename(filename);
+   auto base = sFilename.substr(sFilename.find_last_of('/') + 1);
+   auto sizeAndExtension = base.substr(base.find("_") + 1);
+   auto sizeOnly = sizeAndExtension.substr(0, sizeAndExtension.find("."));
+   int firstNumber = std::stoi(sizeOnly.substr(0, sizeOnly.find('_')));
+   int secondNumber = std::stoi(sizeOnly.substr(sizeOnly.find('_') + 1));
+
+   log(0, "Parsed this many input variables: ");
+   log(0, std::to_string(firstNumber * secondNumber).c_str());
+   log(0, "\n\n");
+
    parse_DIMACS(in, *solver);
+   solver->inputVars = firstNumber * secondNumber;
 
    gzclose(in);
 

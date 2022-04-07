@@ -256,9 +256,11 @@ DivideAndConquer::DivideAndConquer()
    workQueue = new SimpleWorkingQueue();
 
    if (Parameters::getIntParam("use-decomp", 0) == 1) {
+       log(0, "Using decomposition\n");
        const char* filename = Parameters::getFilename();
        std::string s(filename);
        std::string cube_filename = s.substr(0, s.find('.')) + std::string(".txt");
+       log(0, cube_filename.c_str());
        std::string input;
 
        std::ifstream cubes_file(cube_filename.c_str());
@@ -272,6 +274,8 @@ DivideAndConquer::DivideAndConquer()
            }
            workQueue->pushJob(cube);
        }
+   } else {
+       log(0, "Not using decomposition\n");
    }
 
    waitJob = true;
