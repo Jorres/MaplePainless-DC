@@ -48,9 +48,11 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
  **************************************************************************************************/
 
 #include <math.h>
+#include <string>
 
 #include "utils/System.h"
 #include "mtl/Sort.h"
+#include "../../painless-src/utils/Logger.h"
 #include "core/Solver.h"
 #include "core/Constants.h"
 
@@ -666,7 +668,26 @@ void Solver::pickBranchLit(int n, std::vector<Lit>& lits){
     if(next!=var_Undef && value(next)==l_Undef && decision[next])
       lits.push_back(mkLit(next, polarity[next]));
   }
+}
 
+Lit Solver::pickBranchLitUsingFlipActivityWithInputVarsOnly(){
+  assert(useFlip);
+  Var next=0;
+  int val=-1;
+
+  int inputVars = this->inputVars;
+
+  log(0, "Entered selection algorithm with this many input vars %d\n", inputVars);
+
+  for (size_t i = 0; i < flipActivity.size(); i++) {
+    if (flipActivity[i] > val && decision[i] && value(i) == l_Undef &&
+        i < inputVars) {
+      val = flipActivity[i];
+      next = i;
+    }
+  }
+
+  return val == -1 ? lit_Undef : mkLit(next, rnd_pol ? drand(random_seed) < 0.5 : polarity[next]);
 }
 
 Lit Solver::pickBranchLitUsingFlipActivity(){
@@ -675,16 +696,9 @@ Lit Solver::pickBranchLitUsingFlipActivity(){
   int val=-1;
 
   for(size_t i=0;i<flipActivity.size();i++){
-      if (this->shouldUseInputVarsOnly) {
-            if(flipActivity[i]>val && decision[i] && value(i) == l_Undef && i < this->inputVars){
-              val=flipActivity[i];
-              next=i;
-            }
-        } else {
-            if(flipActivity[i]>val && decision[i] && value(i) == l_Undef){
-              val=flipActivity[i];
-              next=i;
-            }
+        if(flipActivity[i]>val && decision[i] && value(i) == l_Undef){
+          val=flipActivity[i];
+          next=i;
         }
   }
 
@@ -713,6 +727,27 @@ void Solver::pickBranchLitUsingFlipActivity(int n, std::vector<Lit>& lits){
 
   }while(cpt++<n);
 }
+
+Lit Solver::pickBranchLitUsingPropagationRateWithInputVarsOnly(){
+  assert(usePR);
+  Var next=0;
+  double val=-1.0;
+  double tmp;
+
+  int inputVars = this->inputVars;
+
+  log(0, "Entered selection algorithm with this many input vars %d\n", inputVars);
+
+  for(size_t i=0;i<nbPropagations.size();i++){
+    if(nbDecisionVar[i]!=0 && (tmp=(nbPropagations[i]*1.0/nbDecisionVar[i]))>val && decision[i] && value(i) == l_Undef && i < inputVars){
+      val=tmp;
+      next=i;
+    }
+  }
+
+  return val == -1.0 ? lit_Undef : mkLit(next, rnd_pol ? drand(random_seed) < 0.5 : polarity[next]);
+}
+
 
 Lit Solver::pickBranchLitUsingPropagationRate(){
   assert(usePR);

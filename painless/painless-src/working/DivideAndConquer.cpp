@@ -259,6 +259,14 @@ DivideAndConquer::DivideAndConquer()
 
    log(0, "cubes Filepath: %s \n", cubesFilepath.c_str());
 
+   bool shouldUseInputVarsOnly = Parameters::getIntParam("n-input-vars", -1) != -1;
+
+   if (shouldUseInputVarsOnly) {
+       log(0, "Going to restrict splitting variable selection to input vars\n");
+   } else {
+       log(0, "Going to use variables for splitting freely, with no restrictions\n");
+   }
+
    if (cubesFilepath.size() > 0) {
        log(0, "Using decomposition\n");
        log(0, cubesFilepath.c_str());

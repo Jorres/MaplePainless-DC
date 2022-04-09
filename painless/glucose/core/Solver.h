@@ -122,10 +122,12 @@ public:
     void pickBranchLit (int n, std::vector<Lit>& lits); //Return the n first decision variables. Doesn't modify order_heap nor activity.
 
     Lit pickBranchLitUsingFlipActivity(); //Return the next decision variable using flip activity.
+    Lit pickBranchLitUsingFlipActivityWithInputVarsOnly();
 
     void pickBranchLitUsingFlipActivity(int n, std::vector<Lit>& lits); //Return the n first decision variables using flip activity. Doesn't modify flip activity.
 
     Lit pickBranchLitUsingPropagationRate(); //Return the next decision variable using vector nbPropagations and nbDecisionVar to choose the variable with highest propagation rate.
+    Lit pickBranchLitUsingPropagationRateWithInputVarsOnly();
 
     void pickBranchLitUsingPropagationRate(int n,std::vector<Lit>& lits); //Return the n first decision variables using propagation rate.
 
@@ -184,8 +186,6 @@ public:
                                   // this vector represent the final conflict clause expressed in the assumptions.
                                   
     int inputVars;
-    bool shouldUseInputVarsOnly;
-
     // Mode of operation:
     //
     int       verbosity;
