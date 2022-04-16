@@ -36,7 +36,8 @@ enum SatResult
 {
 	SAT     = 10,
 	UNSAT   = 20,
-	UNKNOWN = 0
+	UNKNOWN = 0,
+    UNKNOWN_SELF_SPLIT = 30,
 };
 
 

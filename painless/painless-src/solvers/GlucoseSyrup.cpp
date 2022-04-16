@@ -335,16 +335,24 @@ SatResult GlucoseSyrup::solve(const vector<int> &cube, int nConflicts) {
     }
   }
 
+  nConflicts = Parameters::getIntParam("n-conflicts", -1);
+
   if (nConflicts != -1)
     solver->setConfBudget(nConflicts);
 
   lbool res = solver->solveLimited(gAssumptions);
+
+  bool hasFinishedByBudget = !solver->checkInterrupt();
 
   if (res == l_True)
     return SAT;
 
   if (res == l_False)
     return UNSAT;
+
+  if (hasFinishedByBudget) {
+    return UNKNOWN_SELF_SPLIT;
+  }
 
   return UNKNOWN;
 }

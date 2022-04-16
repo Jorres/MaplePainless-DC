@@ -54,6 +54,16 @@ SimpleWorkingQueue::popJob(vector<int> & outGuidingPath)
 
    return true;
 }
+
+int
+SimpleWorkingQueue::size()
+{
+   queueLock.lock();
+   int ret = queue.size();
+   queueLock.unlock();
+
+   return ret;
+}
    
 bool
 SimpleWorkingQueue::empty()

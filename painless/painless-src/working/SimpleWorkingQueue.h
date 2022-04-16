@@ -44,6 +44,8 @@ public:
    
    virtual bool empty();
 
+   virtual int size();
+
 protected:
 
    deque<vector<int> > queue;

@@ -39,4 +39,6 @@ public:
    virtual bool popJob(vector<int> & outGuidingPath) = 0;
    
    virtual bool empty() = 0;
+
+   virtual int size() = 0;
 };

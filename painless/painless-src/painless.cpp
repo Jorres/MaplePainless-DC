@@ -91,7 +91,9 @@ int main(int argc, char ** argv)
       printf("\t-num-split=<INT>\t for D&C: number of splitting variables picked at" \
              "each splitting point, default is 1\n");
       printf("\t-initial-cubes=<PATH>\t specifying this automatically enables using decomposition\n");
+      printf("\t The following settings are available for Glucose only:\n");
       printf("\t-n-input-vars=<INT>\t specifying this automatically enables choosing input vars ONLY\n");
+      printf("\t-n-conflicts=<INT>\t specifying this enables solving with conflict budget\n");
       return 0;
    }
 

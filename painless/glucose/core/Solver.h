@@ -169,6 +169,7 @@ public:
     void    budgetOff();
     void    interrupt();          // Trigger a (potentially asynchronous) interruption of the solver.
     void    clearInterrupt();     // Clear interrupt indicator flag.
+    bool    checkInterrupt();     
 
     // Memory managment:
     //
@@ -516,6 +517,7 @@ inline void     Solver::setConfBudget(int64_t x){ conflict_budget    = conflicts
 inline void     Solver::setPropBudget(int64_t x){ propagation_budget = propagations + x; }
 inline void     Solver::interrupt(){ asynch_interrupt = true; }
 inline void     Solver::clearInterrupt(){ asynch_interrupt = false; }
+inline bool     Solver::checkInterrupt() { return asynch_interrupt; }
 inline void     Solver::budgetOff(){ conflict_budget = propagation_budget = -1; }
 inline bool     Solver::withinBudget() const {
     return !asynch_interrupt &&
