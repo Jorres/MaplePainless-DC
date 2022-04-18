@@ -1,16 +1,17 @@
 #### Hack modification
 
 Conditions:
-- next to the file with a cnf, there should be a file with cubes in format:
-    - every cube is a sequence of ints, e.g. "1 -2 100 1801"
+- here's how cube file should be formatted:
+    - every cube is a sequence of ints, e.g. "1 -2 100 1801", with no "0" at the end
     - every cube on its own line
-    - cube filename should end in txt, for example "cnfs/BvP_7_4.cnf" and "cnfs/BvP_7_4.txt"
+- specify '-initial-cubes' flag
 - does not work with cloning heuristic set to 2
 
 Under those conditions, here is a launch sample:
 
 ```
-./painless -solver=glucose -d=1 -c=6 -wkr-strat=4 -shr-strat=1 -split-heur=2 -v=2 cnfs/BvP_7_4.cnf
+./painless -solver=glucose -d=1 -c=6 -wkr-strat=4 -shr-strat=1 -split-heur=2 \
+    -v=2 -initial-cubes=cnfs/BvP_7_4.txt cnfs/BvP_7_4.cnf 
 ```
 
 Feel free to tweak the remaining params however necessary.
